@@ -5,16 +5,15 @@ class Solution {
         for (i in 0 until name.size) {
             pointMap[name[i]] = yearning[i]
         }
-        photo.mapIndexed { index, strings ->
+        photo.forEachIndexed { index, strings ->
             var point = 0
-            strings.map {
+            strings.forEach {
                 if (pointMap.containsKey(it)) {
                     point += pointMap.getValue(it)
-                    answer[index] = point
                 }
             }
+            answer[index] = point
         }
-        println(pointMap)
         return answer
     }
 }
