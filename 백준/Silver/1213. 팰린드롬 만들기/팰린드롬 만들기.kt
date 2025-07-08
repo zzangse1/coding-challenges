@@ -1,42 +1,37 @@
 fun main() {
-    val alpArray = Array<Int>(26){0}
-    val answer = StringBuilder("")
     val input = readln()
-    val firstArray = StringBuilder("")
-    val center = StringBuilder("")
-    input.toCharArray().sort()
+    val cnt = IntArray(104)
+    var oddCount = 0
+    var oddChar = ' '
+    // 문자 개수 카운트
+    for (c in input) cnt[c.code]++
 
-    input.forEach {
-        alpArray[it.toInt()-65]++
+    // 홀수 판단
+    for (c in 'A'..'Z') {
+        if (cnt[c.code] % 2 != 0) {
+            oddCount++
+            oddChar = c
+        }
     }
-    val count = alpArray.count { it%2 !=0 }
-    if (count > 1) {
+
+    // 팰린드롬 판단
+    if (oddCount > 1) {
         println("I'm Sorry Hansoo")
         return
-    } else if (count == 1) {
-        alpArray.forEachIndexed { index, i ->
-            if (i %2 != 0) {
-                repeat((i-1)/2) {
-                    firstArray.append((index+65).toChar())
-                }
-                center.append((index+65).toChar().toString())
-            } else {
-                repeat(i/2) {
-                    firstArray.append((index+65).toChar())
-                }
-            }
-        }
-        answer.append(firstArray)
-        answer.append(center)
-        answer.append(firstArray.reverse())
-    } else {
-        alpArray.forEachIndexed { index, i ->
-            repeat(i/2) {
-                firstArray.append((index+65).toChar())
-            }
-        }
-        answer.append(firstArray)
-        answer.append(firstArray.reverse())
     }
-    println(answer)
+    val sb = StringBuilder()
+    for (i in 'A'..'Z') {
+        repeat(cnt[i.code] / 2) {
+            sb.append(i)
+        }
+    }
+
+    val first = sb.toString()
+    val last = sb.reverse().toString()
+
+    if (oddCount == 1) {
+        println(first + oddChar + last)
+    } else {
+        println(first+last)
+    }
 }
